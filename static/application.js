@@ -53,6 +53,7 @@ haste_document.prototype.load = function(key, callback, lang) {
   });
 };
 
+/*
 // Save this document to the server and lock it here
 haste_document.prototype.save = function(data, callback) {
   if (this.locked) {
@@ -86,22 +87,18 @@ haste_document.prototype.save = function(data, callback) {
     }
   });
 };
+*/
 
 ///// represents the paste application
 
-var haste = function(appName, options) {
+var haste = function(appName) {
   this.appName = appName;
   this.$textarea = $('textarea');
   this.$box = $('#box');
   this.$code = $('#box code');
   this.$linenos = $('#linenos');
-  this.options = options;
   this.configureShortcuts();
   this.configureButtons();
-  // If twitter is disabled, hide the button
-  if (!options.twitter) {
-    $('#box2 .twitter').hide();
-  }
 };
 
 // Set the page title - include the appName
@@ -121,12 +118,12 @@ haste.prototype.showMessage = function(msg, cls) {
 
 // Show the light key
 haste.prototype.lightKey = function() {
-  this.configureKey(['new', 'save']);
+  this.configureKey(['raw', 'issue']);
 };
 
 // Show the full key
 haste.prototype.fullKey = function() {
-  this.configureKey(['new', 'duplicate', 'twitter', 'raw']);
+  this.configureKey(['raw', 'issue']);
 };
 
 // Set the key up for certain things to be enabled
@@ -146,6 +143,7 @@ haste.prototype.configureKey = function(enable) {
 
 // Remove the current document (if there is one)
 // and set up for a new one
+/*
 haste.prototype.newDocument = function(hideHistory) {
   this.$box.hide();
   this.doc = new haste_document();
@@ -159,11 +157,13 @@ haste.prototype.newDocument = function(hideHistory) {
   });
   this.removeLineNumbers();
 };
+*/
 
 // Map of common extensions
 // Note: this list does not need to include anything that IS its extension,
 // due to the behavior of lookupTypeByExtension and lookupExtensionByType
 // Note: optimized for lookupTypeByExtension
+/*
 haste.extensionMap = {
   rb: 'ruby', py: 'python', pl: 'perl', php: 'php', scala: 'scala', go: 'go',
   xml: 'xml', html: 'xml', htm: 'xml', css: 'css', js: 'javascript', vbs: 'vbscript',
@@ -188,6 +188,7 @@ haste.prototype.lookupExtensionByType = function(type) {
 haste.prototype.lookupTypeByExtension = function(ext) {
   return haste.extensionMap[ext] || ext;
 };
+*/
 
 // Add line numbers to the document
 // For the specified number of lines
@@ -199,10 +200,12 @@ haste.prototype.addLineNumbers = function(lineCount) {
   $('#linenos').html(h);
 };
 
+/*
 // Remove the line numbers
 haste.prototype.removeLineNumbers = function() {
   $('#linenos').html('&gt;');
 };
+*/
 
 // Load a document and show it
 haste.prototype.loadDocument = function(key) {
@@ -220,12 +223,13 @@ haste.prototype.loadDocument = function(key) {
       _this.$box.show().focus();
       _this.addLineNumbers(ret.lineCount);
     }
-    else {
+    /*else {
       _this.newDocument();
-    }
-  }, this.lookupTypeByExtension(parts[1]));
+    }*/
+  }, (parts[1] === 'md' ? 'markdown' : 'javascript'));
 };
 
+/*
 // Duplicate the current document - only if locked
 haste.prototype.duplicateDocument = function() {
   if (this.doc.locked) {
@@ -257,45 +261,11 @@ haste.prototype.lockDocument = function() {
     }
   });
 };
+*/
 
 haste.prototype.configureButtons = function() {
   var _this = this;
   this.buttons = [
-    {
-      $where: $('#box2 .save'),
-      label: 'Save',
-      shortcutDescription: 'control + s',
-      shortcut: function(evt) {
-        return evt.ctrlKey && (evt.keyCode === 83);
-      },
-      action: function() {
-        if (_this.$textarea.val().replace(/^\s+|\s+$/g, '') !== '') {
-          _this.lockDocument();
-        }
-      }
-    },
-    {
-      $where: $('#box2 .new'),
-      label: 'New',
-      shortcut: function(evt) {
-        return evt.ctrlKey && evt.keyCode === 78;
-      },
-      shortcutDescription: 'control + n',
-      action: function() {
-        _this.newDocument(!_this.doc.key);
-      }
-    },
-    {
-      $where: $('#box2 .duplicate'),
-      label: 'Duplicate & Edit',
-      shortcut: function(evt) {
-        return _this.doc.locked && evt.ctrlKey && evt.keyCode === 68;
-      },
-      shortcutDescription: 'control + d',
-      action: function() {
-        _this.duplicateDocument();
-      }
-    },
     {
       $where: $('#box2 .raw'),
       label: 'Just Text',
@@ -308,14 +278,14 @@ haste.prototype.configureButtons = function() {
       }
     },
     {
-      $where: $('#box2 .twitter'),
-      label: 'Twitter',
+      $where: $('#box2 .issue'),
+      label: 'Open Issue',
       shortcut: function(evt) {
-        return _this.options.twitter && _this.doc.locked && evt.shiftKey && evt.ctrlKey && evt.keyCode == 84;
+        return evt.ctrlKey && evt.shiftKey && evt.keyCode == 71;
       },
-      shortcutDescription: 'control + shift + t',
+      shortcutDescription: 'control + shift + g',
       action: function() {
-        window.open('https://twitter.com/share?url=' + encodeURI(window.location.href));
+        window.open('https://github.com/GeyserMC/Geyser/issues/new?assignees=&labels=&template=bug_report.md&title=');
       }
     }
   ];

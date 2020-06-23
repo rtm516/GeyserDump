@@ -3,11 +3,11 @@
   "host": "0.0.0.0",
   "port": 7777,
 
-  "keyLength": 10,
+  "keyLength": 32,
 
   "maxLength": 400000,
 
-  "staticMaxAge": 86400,
+  "staticMaxAge": 60 * 60 * 24 * 365, // 1 Year
 
   "recompressStaticAssets": true,
 
@@ -20,23 +20,21 @@
   ],
 
   "keyGenerator": {
-    "type": "phonetic"
+    "type": "random"
   },
 
   "rateLimits": {
     "categories": {
       "normal": {
-        "totalRequests": 500,
-        "every": 60000
+        "totalRequests": 1,
+        "every": 60 * 60 // 1 Hour
       }
     }
   },
 
   "storage": {
-    "type": "memcached",
-    "host": "127.0.0.1",
-    "port": 11211,
-    "expire": 2592000
+    "type": "file",
+    "path": "./data"
   },
 
   "documents": {

@@ -73,21 +73,23 @@ textarea {
 
 #box1 a.logo, #box1 a.logo:visited {
 	display: inline-block;
-	background: url(logo.png);
+	background: url(geyser.png);
 	width: 126px;
-	height: 42px;
+	height: 62px;
 }
 
 #box1 a.logo:hover {
-	background-position: 0 bottom;
+	/*background-position: 0 bottom;*/
 }
 
 #box2 .function {
-	background: url(function-icons.png);
+	background: transparent;
 	width: 32px;
 	height: 37px;
 	display: inline-block;
 	position: relative;
+	border-width: 0;
+	color: #c4dce3;
 }
 
 #box2 .link embed {
@@ -128,27 +130,6 @@ textarea {
 	color: #c4dce3;
 	font-weight: normal;
 }
-
-#box2 .function.save { background-position: -5px top; }
-#box2 .function.enabled.save { background-position: -5px center; }
-#box2 .function.enabled.save:hover { background-position: -5px bottom; }
-
-#box2 .function.new { background-position: -42px top; }
-#box2 .function.enabled.new { background-position: -42px center; }
-#box2 .function.enabled.new:hover { background-position: -42px bottom; }
-
-#box2 .function.duplicate { background-position: -79px top; }
-#box2 .function.enabled.duplicate { background-position: -79px center; }
-#box2 .function.enabled.duplicate:hover { background-position: -79px bottom; }
-
-#box2 .function.raw { background-position: -116px top; }
-#box2 .function.enabled.raw { background-position: -116px center; }
-#box2 .function.enabled.raw:hover { background-position: -116px bottom; }
-
-#box2 .function.twitter { background-position: -153px top; }
-#box2 .function.enabled.twitter { background-position: -153px center; }
-#box2 .function.enabled.twitter:hover { background-position: -153px bottom; }
-#box2 .button-picture{ border-width: 0; font-size: inherit; }
 
 #messages {
 	position:fixed;
