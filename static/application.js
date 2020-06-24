@@ -226,7 +226,7 @@ haste.prototype.loadDocument = function(key) {
     /*else {
       _this.newDocument();
     }*/
-  }, (parts[1] === 'md' ? 'markdown' : 'javascript'));
+  }, (parts[1] === 'md' ? 'markdown' : 'json'));
 };
 
 /*
