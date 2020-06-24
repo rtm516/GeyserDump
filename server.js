@@ -4,9 +4,9 @@ var fs = require('fs');
 var uglify = require('uglify-js');
 var winston = require('winston');
 var connect = require('connect');
-var route = require('connect-route');
+var route = require('connect-route-ext');
 var connect_st = require('st');
-var connect_rate_limit = require('connect-ratelimit');
+var connect_rate_limit = require('./connect-ratelimit');
 
 var DocumentHandler = require('./lib/document_handler');
 
@@ -99,6 +99,7 @@ var documentHandler = new DocumentHandler({
 });
 
 var app = connect();
+config.rateLimitsPost.end = true;
 
 // Rate limit all requests
 if (config.rateLimits) {
@@ -115,7 +116,7 @@ app.use(route(function(router) {
     return documentHandler.handleRawGet(key, response, skipExpire);
   });
   // add documents
-  router.post('/documents', function(request, response) {
+  router.post('/documents', connect_rate_limit(config.rateLimitsPost), function(request, response) {
     return documentHandler.handlePost(request, response);
   });
   // get documents

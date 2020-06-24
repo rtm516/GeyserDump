@@ -32,6 +32,19 @@
     }
   },
 
+  "rateLimitsPost": {
+    "categories": {
+      "normal": {
+        "totalRequests": 1,
+        "every": 60000
+      }
+    },
+    "fail": {
+      "message": "{\"message\":\"You can only upload a dump once a minute\"}",
+      "type": "application/json"
+    }
+  },
+
   "storage": {
     "type": "file",
     "path": "./data"
