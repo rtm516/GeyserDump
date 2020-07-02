@@ -40,7 +40,7 @@
       }
     },
     "fail": {
-      "message": "{\"message\":\"You can only upload a dump once a minute\"}",
+      "message": "{\"message\":\"You can only upload a dump once every 5 minutes\"}",
       "type": "application/json"
     }
   },
