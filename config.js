@@ -7,7 +7,7 @@
 
   "maxLength": 400000,
 
-  "staticMaxAge": 31536000,
+  "staticMaxAge": 15552000,
 
   "recompressStaticAssets": true,
 
@@ -36,7 +36,7 @@
     "categories": {
       "normal": {
         "totalRequests": 1,
-        "every": 60000
+        "every": 300000
       }
     },
     "fail": {
