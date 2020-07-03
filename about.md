@@ -1,6 +1,6 @@
 # GeyserDump
 
-GeyserDump, based of Hastebin.
+GeyserDump, based off of Hastebin. Takes information from the Minecraft Bedrock-to-Java protocol translator Geyser and dumps it into a developer-readable format for better debugging of user problems.
 
 ## How to use?
 
@@ -14,7 +14,7 @@ This service can stop anytime. We do not take responsibility for any hosted data
 
 ## Contact
 
-For any questions/bugs about this service, please jump on our [discord](http://discord.geysermc.org/)
+For any questions/bugs about this service, please jump on our [Discord](http://discord.geysermc.org/).
 
 ## Open Source
 
@@ -26,5 +26,7 @@ Haste can easily be installed behind your network, and it's all open source!
 ## Author
 
 Code by John Crepezzi <john.crepezzi@gmail.com>
+
 Key Design by Brian Dawson <bridawson@gmail.com>
+
 Modified for Geyser by Ryan Milner <ryan@rtm516.co.uk>
