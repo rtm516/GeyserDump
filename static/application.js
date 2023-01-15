@@ -65,7 +65,7 @@ haste_document.prototype.save = function(data, callback) {
     type: 'post',
     data: data,
     dataType: 'json',
-    contentType: 'application/json; charset=utf-8',
+    contentType: 'text/plain; charset=utf-8',
     success: function(res) {
       _this.locked = true;
       _this.key = res.key;
@@ -170,8 +170,7 @@ haste.extensionMap = {
   lua: 'lua', pas: 'delphi', java: 'java', cpp: 'cpp', cc: 'cpp', m: 'objectivec',
   vala: 'vala', sql: 'sql', sm: 'smalltalk', lisp: 'lisp', ini: 'ini',
   diff: 'diff', bash: 'bash', sh: 'bash', tex: 'tex', erl: 'erlang', hs: 'haskell',
-  md: 'markdown', txt: '', coffee: 'coffee', json: 'javascript',
-  swift: 'swift'
+  md: 'markdown', txt: '', coffee: 'coffee', swift: 'swift'
 };
 
 // Look up the extension preferred for a type
