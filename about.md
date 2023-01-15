@@ -20,8 +20,8 @@ For any questions/bugs about this service, please jump on our [Discord](http://d
 
 Haste can easily be installed behind your network, and it's all open source!
 
-* [haste-client](https://github.com/seejohnrun/haste-client)
-* [haste-server](https://github.com/seejohnrun/haste-server)
+* [haste-client](https://github.com/toptal/haste-client)
+* [haste-server](https://github.com/toptal/haste-server)
 
 ## Author
 
