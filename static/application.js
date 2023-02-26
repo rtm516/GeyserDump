@@ -284,7 +284,7 @@ haste.prototype.configureButtons = function() {
       },
       shortcutDescription: 'control + shift + g',
       action: function() {
-        window.open('https://github.com/GeyserMC/Geyser/issues/new?assignees=&labels=&template=bug_report.md&title=');
+        window.open('https://github.com/GeyserMC/Geyser/issues/new?assignees=&labels=&template=bug_report.yml');
       }
     }
   ];
