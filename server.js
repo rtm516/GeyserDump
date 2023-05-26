@@ -92,76 +92,34 @@ var gen = require('./lib/key_generators/' + pwOptions.type);
 var keyGenerator = new gen(pwOptions);
 
 // Configure the document handler
-var documentHandler = new DocumentHandler({
-  store: preferredStore,
-  maxLength: config.maxLength,
-  keyLength: config.keyLength,
-  keyGenerator: keyGenerator
-});
+var docHandlerOptions = config.documentHandler || {};
+docHandlerOptions.keyLength = docHandlerOptions.keyLength || 10;
+docHandlerOptions.keyGenerator = keyGenerator;
+docHandlerOptions.preferredStore = preferredStore;
+docHandlerOptions.restrictOwners = config.restrictOwners;
+var documentHandler = new DocumentHandler(docHandlerOptions);
 
-var app = connect();
-config.rateLimitsPost.end = true;
-const postRateLimit = connect_rate_limit(config.rateLimitsPost)
+// Set up rate limiting middleware for POST requests
+if (config.rateLimitsPost) {
+  var postRateLimit = connect_rate_limit(config.rateLimitsPost);
+  config.rateLimitsPost.end = true;
 
-// Rate limit all requests
-if (config.rateLimits) {
-  config.rateLimits.end = true;
-  app.use(connect_rate_limit(config.rateLimits));
+  app.use(route.post('/documents', postRateLimit));
 }
 
-// first look at API calls
-app.use(route(function(router) {
-  // get raw documents - support getting with extension
+// Configure the connect app
+var app = connect()
+  .use(connect.query())
+  .use(connect_st({ path: './static', url: '/static' }))
+  .use(route(function (app) {
+    app.get('/', documentHandler.handleIndex.bind(documentHandler));
+    app.post('/documents', documentHandler.handleDocumentCreate.bind(documentHandler));
+    app.get('/:id([a-zA-Z0-9]{8})', documentHandler.handleDocumentGet.bind(documentHandler));
+    app.get('/:id([a-zA-Z0-9]{8}).:ext([a-zA-Z]{1,5})', documentHandler.handleDocumentGet.bind(documentHandler));
+    app.delete('/:id([a-zA-Z0-9]{8})', documentHandler.handleDocumentDelete.bind(documentHandler));
+  }));
 
-  router.get('/raw/:id', function(request, response) {
-    return documentHandler.handleRawGet(request, response, config);
-  });
-
-  router.head('/raw/:id', function(request, response) {
-    return documentHandler.handleRawGet(request, response, config);
-  });
-
-  // add documents
-  router.post('/documents', function(request, response) {
-    return postRateLimit(request, response, () => {
-      return documentHandler.handlePost(request, response);
-    })
-  });
-
-  // get documents
-  router.get('/documents/:id', function(request, response) {
-    return documentHandler.handleGet(request, response, config);
-  });
-
-  router.head('/documents/:id', function(request, response) {
-    return documentHandler.handleGet(request, response, config);
-  });
-}));
-
-// Otherwise, try to match static files
-app.use(connect_st({
-  path: __dirname + '/static',
-  content: { maxAge: config.staticMaxAge },
-  passthrough: true,
-  index: false
-}));
-
-// Then we can loop back - and everything else should be a token,
-// so route it back to /
-app.use(route(function(router) {
-  router.get('/:id', function(request, response, next) {
-    request.sturl = '/';
-    next();
-  });
-}));
-
-// And match index
-app.use(connect_st({
-  path: __dirname + '/static',
-  content: { maxAge: config.staticMaxAge },
-  index: 'index.html'
-}));
-
-http.createServer(app).listen(config.port, config.host);
-
-winston.info('listening on ' + config.host + ':' + config.port);
+  
+http.createServer(app).listen(config.port, config.host, function(){
+  winston.info('listening on ' + config.host + ':' + config.port);
+});
