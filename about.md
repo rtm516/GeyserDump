@@ -29,4 +29,4 @@ Code by John Crepezzi <john.crepezzi@gmail.com>
 
 Key Design by Brian Dawson <bridawson@gmail.com>
 
-Modified for Geyser by Ryan Milner <ryan@rtm516.co.uk>
+Modified for Geyser by Ryan Milner
